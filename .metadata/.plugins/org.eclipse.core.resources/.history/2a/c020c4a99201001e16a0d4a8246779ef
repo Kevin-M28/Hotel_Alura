@@ -1,0 +1,27 @@
+package com.hotelAlura.pruevas;
+
+import java.util.Date;
+
+import com.hotelAlura.clases.Administrador;
+import com.hotelAlura.clases.Cliente;
+import com.hotelAlura.clases.Usuario;
+import com.hotelAlura.dao.AdminDao;
+import com.hotelAlura.utiles.JPAUtils;
+
+import jakarta.persistence.EntityManager;
+
+public class adminPrueba {
+	private static Administrador adm = new Administrador("Kevin","Admin","Admin");
+	//private static Cliente cl1 = new Cliente("Kevin", "Alonso", new Date(), "Costarricense", "Kef2829", "masteryi");
+	//private static Usuario user1 = new Usuario("Alonso111","asdadad");
+	
+	public static void main(String[] args) {
+		try (JPAUtils entityManagerUtil = new JPAUtils()) {
+            EntityManager entityManager = entityManagerUtil.getEntityManager();
+            AdminDao ad = new AdminDao(entityManager);
+            ad.guardarAdmin(adm);
+		}catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+}

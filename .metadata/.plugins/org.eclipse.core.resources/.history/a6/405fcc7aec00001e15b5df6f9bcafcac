@@ -1,0 +1,149 @@
+package com.hotelAlura.GUI;
+
+
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import com.hotelAlura.clases.Cliente;
+
+import javax.swing.JLabel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.Color;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.CardLayout;
+import javax.swing.ImageIcon;
+import java.awt.Cursor;
+import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class MenuUsuario{
+	private JFrame frame;
+	private JPanel contentPane;
+	private JPanel panelMenu;
+	private JPanel panelContenedor;
+	private JButton btnMiUsuario;
+	private JButton btnReservar;
+	private JButton btnSalir;
+	private JLabel lblNombreUser;
+	private final Cliente cliente;
+
+
+	public MenuUsuario(Cliente c1) {
+		this.cliente = c1;
+		frame = new JFrame();
+		frame.setBounds(100, 100, 1230, 765);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		frame.setContentPane(contentPane);
+		
+		panelMenu = new JPanel();
+		
+		panelContenedor = new JPanel();
+		
+		
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panelMenu, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panelContenedor, GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panelContenedor, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+						.addComponent(panelMenu, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		panelContenedor.setLayout(new CardLayout(0, 0));
+		panelContenedor.add(new DatosUsuario(cliente), "Usuario");
+		panelContenedor.add(new Reservas(cliente), "Reserva");
+		
+		btnMiUsuario = new JButton("Mis datos");
+		
+		btnMiUsuario.setIconTextGap(6);
+		btnMiUsuario.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnMiUsuario.setIcon(new ImageIcon(MenuUsuario.class.getResource("/com/hotelAlura/GUI/Imagenes/Datos.png")));
+		btnMiUsuario.setFocusable(false);
+		btnMiUsuario.setBorderPainted(false);
+		btnMiUsuario.setContentAreaFilled(false);
+		btnMiUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnMiUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+		
+		btnReservar = new JButton("Reservar");
+		
+		btnReservar.setIconTextGap(6);
+		btnReservar.setIcon(new ImageIcon(MenuUsuario.class.getResource("/com/hotelAlura/GUI/Imagenes/Reserva.png")));
+		btnReservar.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnReservar.setFocusable(false);
+		btnReservar.setBorderPainted(false);
+		btnReservar.setContentAreaFilled(false);
+		btnReservar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnReservar.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+		
+		btnSalir = new JButton("Salir");
+		btnSalir.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnSalir.setFocusable(false);
+		btnSalir.setBorderPainted(false);
+		btnSalir.setContentAreaFilled(false);
+		btnSalir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSalir.setIcon(new ImageIcon(MenuUsuario.class.getResource("/com/hotelAlura/GUI/Imagenes/casa.png")));
+		btnSalir.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+		
+		lblNombreUser = new JLabel(this.cliente.getNombre());
+		lblNombreUser.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombreUser.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+		GroupLayout gl_panelMenu = new GroupLayout(panelMenu);
+		gl_panelMenu.setHorizontalGroup(
+			gl_panelMenu.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelMenu.createSequentialGroup()
+					.addGap(27)
+					.addGroup(gl_panelMenu.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(btnMiUsuario, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnSalir, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(lblNombreUser, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnReservar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
+					.addContainerGap(28, Short.MAX_VALUE))
+		);
+		gl_panelMenu.setVerticalGroup(
+			gl_panelMenu.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelMenu.createSequentialGroup()
+					.addGap(93)
+					.addComponent(lblNombreUser, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+					.addGap(99)
+					.addComponent(btnMiUsuario, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+					.addGap(47)
+					.addComponent(btnReservar, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+					.addComponent(btnSalir)
+					.addGap(35))
+		);
+		panelMenu.setLayout(gl_panelMenu);
+		contentPane.setLayout(gl_contentPane);
+		CardLayout cardLayout = (CardLayout) panelContenedor.getLayout();
+		btnMiUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelContenedor,"Usuario");
+			}
+		});
+		btnReservar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(panelContenedor,"Reserva");
+			}
+		});
+		frame.setVisible(true);
+	}
+}

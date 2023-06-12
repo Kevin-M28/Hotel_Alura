@@ -1,0 +1,60 @@
+package com.hotelAlura.clases;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+public class ClientTableExample {
+    private DefaultTableModel model;
+    private JTable table;
+
+    public ClientTableExample() {
+        // Crear el modelo de tabla con las columnas
+        String[] columnNames = {"ID", "Nombre", "Apellido", "Edad"};
+        model = new DefaultTableModel(columnNames, 0);
+        
+        // Crear el JTable con el modelo
+        table = new JTable(model);
+        
+        // Crear el panel y agregar el JTable
+        JPanel panel = new JPanel();
+        panel.add(new JScrollPane(table));
+        
+        // Crear la ventana y agregar el panel
+        JFrame frame = new JFrame("Cliente");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public void agregarCliente(Cliente cliente) {
+        // Obtener los datos del cliente
+        /*int id = cliente.getId();
+        String nombre = cliente.getNombre();
+        String apellido = cliente.getApellido();
+        int edad = cliente.getEdad();
+        */
+        // Agregar una nueva fila al modelo
+        /*Object[] rowData = {id, nombre, apellido, edad};
+        model.addRow(rowData);*/
+        
+        // Notificar al modelo que se han realizado cambios
+        model.fireTableDataChanged();
+        
+        // Actualizar la vista de la tabla
+        table.repaint();
+    }
+
+    public static void main(String[] args) {
+        ClientTableExample example = new ClientTableExample();
+        
+        // Crear un cliente de ejemplo
+        /*Cliente cliente = new Cliente(1, "John", "Doe", 30);*/
+        
+        // Agregar el cliente a la tabla
+        /*example.agregarCliente(cliente);*/
+    }
+}

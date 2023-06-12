@@ -1,0 +1,177 @@
+package com.hotelAlura.GUI;
+
+import javax.swing.JPanel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
+import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.RowFilter;
+
+import javax.swing.table.TableRowSorter;
+
+import com.hotelAlura.clases.Cliente;
+import com.hotelAlura.dao.ClientesDao;
+import com.hotelAlura.utiles.JPAUtils;
+
+import jakarta.persistence.EntityManager;
+
+public class Leer_user extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField textNombre;
+	private JTextField textApellido;
+	private JTable table;
+	private JTextField textField;
+	private DefaultTableModel model;
+
+	/**
+	 * Create the panel.
+	 */
+	public Leer_user() {
+
+		JLabel lblNomnbre = new JLabel("Nombre");
+		lblNomnbre.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNomnbre.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+
+		textNombre = new JTextField();
+		textNombre.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		textNombre.setColumns(10);
+
+		JLabel lblApellido = new JLabel("Apellido");
+		lblApellido.setHorizontalAlignment(SwingConstants.CENTER);
+		lblApellido.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+
+		textApellido = new JTextField();
+		textApellido.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		textApellido.setColumns(10);
+
+		JButton btnTodos = new JButton("Todos");
+
+		btnTodos.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnTodos.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+
+		String[] columnNames = { "ID", "Nombre", "Apellido", "Nacimiento", "Nacionalidad", "Telefono" };
+		model = new DefaultTableModel(columnNames, 0);
+
+		table = new JTable(model);
+		refrescar();
+		table.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		JScrollPane pruebaJScrollPane = new JScrollPane(table);
+
+		JButton btnEspecifico = new JButton("Especifico");
+
+		btnEspecifico.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnEspecifico.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+
+		JLabel lblID = new JLabel("ID");
+		lblID.setHorizontalAlignment(SwingConstants.CENTER);
+		lblID.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+
+		textField = new JTextField();
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		textField.setEditable(false);
+		textField.setColumns(10);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addGap(27).addGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup()
+								.addComponent(btnTodos, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
+								.addGap(18).addComponent(btnEspecifico, GroupLayout.PREFERRED_SIZE, 112,
+										GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup().addGap(11).addGroup(groupLayout
+								.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNomnbre, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textNombre, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblApellido, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textApellido, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblID, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))))
+						.addGap(18).addComponent(pruebaJScrollPane, GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+						.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(pruebaJScrollPane,
+								GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup().addGap(176)
+								.addComponent(lblID, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+								.addGap(10)
+								.addComponent(textField, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblNomnbre, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addGap(6)
+								.addComponent(textNombre, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+								.addGap(10)
+								.addComponent(lblApellido, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addGap(6)
+								.addComponent(textApellido, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnTodos, GroupLayout.PREFERRED_SIZE, 35,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnEspecifico, GroupLayout.PREFERRED_SIZE, 35,
+												GroupLayout.PREFERRED_SIZE))))
+				.addContainerGap()));
+		setLayout(groupLayout);
+		btnTodos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refrescar();
+			}
+		});
+		btnEspecifico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (textNombre.getText().trim().length() > 0 && textApellido.getText().trim().length() > 0) {
+					String nom = textNombre.getText();
+					String ape = textApellido.getText();
+					TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+					RowFilter<DefaultTableModel, Object> filter1 = RowFilter.regexFilter("(?i)" + nom, 1);
+					RowFilter<DefaultTableModel, Object> filter2 = RowFilter.regexFilter("(?i)" + ape, 2);
+					RowFilter<DefaultTableModel, Object> combinedFilter = RowFilter
+							.andFilter(Arrays.asList(filter1, filter2));
+					sorter.setRowFilter(combinedFilter);
+					table.setRowSorter(sorter);
+
+				}
+			}
+		});
+
+	}
+
+	public void refrescar() {
+		if (table.getRowSorter() == null) {
+			try (JPAUtils entityManagerUtil = new JPAUtils()) {
+				EntityManager entityManager = entityManagerUtil.getEntityManager();
+				ClientesDao clientesDao = new ClientesDao(entityManager);
+				List<Cliente> clientes = clientesDao.listaClientes();
+				model.setRowCount(0);
+				if (clientes != null) {
+					for (Cliente c1 : clientes) {
+						Object[] filaObjects = { c1.getId_usuarios(), c1.getNombre(), c1.getApellido(),
+								c1.getFecha_nacimiento(), c1.getNacionalidad(), c1.getTelefono() };
+						model.addRow(filaObjects);
+					}
+					table.repaint();
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		} else {
+			table.getRowSorter().setSortKeys(null);
+		}
+
+	}
+}

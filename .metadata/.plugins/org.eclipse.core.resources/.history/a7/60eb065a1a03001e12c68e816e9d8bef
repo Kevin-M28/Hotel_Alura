@@ -1,0 +1,108 @@
+package com.hotelAlura.GUI;
+
+
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+
+import java.awt.Cursor;
+import javax.swing.JPasswordField;
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.ImageIcon;
+import javax.swing.DebugGraphics;
+
+
+public class InicioSesion{
+	
+	private JFrame frame;
+	private JPanel contentPane;
+	private JTextField textUsuario;
+	private MiTeclado tecla;
+	private MiBoton boto;
+	private JButton btnIniciarSe;
+	private JPasswordField passwordFieldContra;
+
+	
+
+	public InicioSesion() {
+		frame = new JFrame();
+		
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setBounds(100, 100, 1000, 700);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		frame.setContentPane(contentPane);
+		
+		btnIniciarSe = new JButton("Iniciar Sesion");
+		btnIniciarSe.setFocusable(false);
+		btnIniciarSe.setContentAreaFilled(false);
+		btnIniciarSe.setIcon(new ImageIcon(InicioSesion.class.getResource("/com/hotelAlura/GUI/Imagenes/login.png")));
+		btnIniciarSe.setSelectedIcon(new ImageIcon(InicioSesion.class.getResource("/com/hotelAlura/GUI/Imagenes/login.png")));
+		btnIniciarSe.setBorder(null);
+		btnIniciarSe.setBackground(new Color(255, 255, 255));
+		btnIniciarSe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnIniciarSe.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		btnIniciarSe.setBounds(212, 430, 263, 73);
+		contentPane.setLayout(null);
+		contentPane.add(btnIniciarSe);
+		
+		textUsuario = new JTextField();
+		textUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		textUsuario.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
+		textUsuario.setBounds(212, 291, 263, 32);
+		contentPane.add(textUsuario);
+		textUsuario.setColumns(10);
+		
+		JLabel lblUsuario = new JLabel("Usuario");
+		lblUsuario.setLabelFor(textUsuario);
+		lblUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		lblUsuario.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUsuario.setBounds(214, 249, 248, 32);
+		contentPane.add(lblUsuario);
+		
+		JLabel lblContrasena = new JLabel("Contraseña");
+		lblContrasena.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		lblContrasena.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblContrasena.setHorizontalAlignment(SwingConstants.CENTER);
+		lblContrasena.setBounds(214, 333, 248, 32);
+		contentPane.add(lblContrasena);
+		
+		this.tecla = new MiTeclado();
+		passwordFieldContra = new JPasswordField();
+		passwordFieldContra.setBounds(212, 375, 263, 32);
+		contentPane.add(passwordFieldContra);
+		passwordFieldContra.addKeyListener(tecla);
+		
+        boto = new MiBoton(textUsuario, passwordFieldContra ,btnIniciarSe, frame);
+        
+        JPanel panelLogo = new ImagenPanel("/com/hotelAlura/GUI/Imagenes/Logo.png");
+        panelLogo.setOpaque(false);
+        panelLogo.setFocusable(false);
+        panelLogo.setBorder(new EmptyBorder(0, 0, 0, 0));
+        panelLogo.setBackground(new Color(240, 240, 240));
+        panelLogo.setBounds(10, 10, 159, 130);
+        contentPane.add(panelLogo);
+        
+        JPanel panelInicioSe = new ImagenPanel("/com/hotelAlura/GUI/Imagenes/login2.png");
+        panelInicioSe.setFocusable(false);
+        panelInicioSe.setOpaque(false);
+        panelInicioSe.setBorder(new EmptyBorder(0, 0, 0, 0));
+        panelInicioSe.setBounds(485, 62, 487, 539);
+        contentPane.add(panelInicioSe);
+        btnIniciarSe.addActionListener(boto);
+        frame.setVisible(true);
+        
+	}
+}
